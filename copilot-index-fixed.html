@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Assistant - Copilot Style</title>
+    <link rel="stylesheet" href="copilot-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Main Chat Interface -->
+        <div class="chat-container">
+            <!-- Header -->
+            <div class="chat-header">
+                <div class="header-left">
+                    <div class="app-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L2 7v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7L12 2zm0 2.5L19.5 8H4.5L12 4.5zM4 18V9.5h16V18H4z"/>
+                        </svg>
+                    </div>
+                    <div class="header-info">
+                        <h1 class="chat-title">Enterprise Assistant</h1>
+                        <p class="chat-subtitle">Your AI-powered workspace companion</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn" title="New conversation">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM9 9V6a1 1 0 112 0v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3z"/>
+                        </svg>
+                    </button>
+                    <button class="header-btn" title="Settings">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Service Selection (Welcome State) -->
+            <div id="welcome-view" class="welcome-view">
+                <div class="welcome-content">
+                    <div class="welcome-text">
+                        <h2>Welcome! Please choose your preferred service:</h2>
+                        <p>Select a service to get started with your AI assistant</p>
+                    </div>
+
+                    <div class="email-input-section">
+                        <label for="user-email">Email Address</label>
+                        <input type="email" id="user-email" placeholder="Enter your email address" required>
+                        <div id="email-error" class="error-message hidden">Please enter a valid email address</div>
+                    </div>
+
+                    <div class="service-cards">
+                        <div class="service-card" data-service="timesheet">
+                            <div class="service-icon">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                                    <path d="M16 4C9.373 4 4 9.373 4 16s5.373 12 12 12 12-5.373 12-12S22.627 4 16 4zm0 2c5.515 0 10 4.485 10 10s-4.485 10-10 10S6 21.515 6 16 10.485 6 16 6zm-1 3v7.414l5.293 5.293 1.414-1.414L17 15.586V9h-2z"/>
+                                </svg>
+                            </div>
+                            <div class="service-info">
+                                <h3>Timesheet Management</h3>
+                                <p>Manage your Oracle and Mars timesheets with AI assistance</p>
+                            </div>
+                            <div class="service-arrow">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M6 12l4-4-4-4v8z"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="service-card" data-service="hr-policy">
+                            <div class="service-icon">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                                    <path d="M6 4v24h20V8l-4-4H6zm2 2h12v4h4v16H8V6zm2 4v2h8v-2h-8zm0 4v2h8v-2h-8zm0 4v2h8v-2h-8zm0 4v2h6v-2h-6z"/>
+                                </svg>
+                            </div>
+                            <div class="service-info">
+                                <h3>HR Policy Assistant</h3>
+                                <p>Get answers about company policies and HR documents</p>
+                            </div>
+                            <div class="service-arrow">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M6 12l4-4-4-4v8z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat View -->
+            <div id="chat-view" class="chat-view hidden">
+                <!-- Service Indicator -->
+                <div class="service-indicator">
+                    <div class="service-badge">
+                        <span class="service-icon-small">⏰</span>
+                        <span id="current-service-name">Timesheet Management</span>
+                    </div>
+                    <div class="user-email">
+                        <span>Email:</span> <span id="current-user-email">user@example.com</span>
+                    </div>
+                </div>
+
+                <!-- Messages Area -->
+                <div class="messages-area">
+                    <div id="messages-container" class="messages-container">
+                        <!-- Messages will be added here dynamically -->
+                    </div>
+
+                    <!-- Typing Indicator -->
+                    <div id="typing-indicator" class="typing-indicator hidden">
+                        <div class="typing-avatar">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 12a2 2 0 11-4 0 2 2 0 014 0zm8 0a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                        </div>
+                        <div class="typing-dots">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div class="input-area">
+                    <div class="input-container">
+                        <div class="input-wrapper">
+                            <textarea id="message-input" placeholder="Ask me anything..." rows="1"></textarea>
+                            <button id="send-button" class="send-button" disabled>
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M2 12l1.09-4.36L10 9l-6.91 1.36L2 12zm0-2l8-2-8-2 1.09-4.36L18 10 3.09 17.36L2 10z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="input-actions">
+                            <button class="action-button" title="Attach file">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M8.5 1a3.5 3.5 0 00-3.5 3.5V12a2 2 0 104 0V5.5a.5.5 0 00-1 0V12a1 1 0 11-2 0V4.5A2.5 2.5 0 018.5 2 2.5 2.5 0 0111 4.5v7a3.5 3.5 0 11-7 0V5.5a.5.5 0 011 0v6a2.5 2.5 0 005 0v-7A3.5 3.5 0 008.5 1z"/>
+                                </svg>
+                            </button>
+                            <button id="reset-conversation" class="action-button" title="New conversation">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M4.646 4.646a.5.5 0 01.708 0L8 7.293l2.646-2.647a.5.5 0 01.708.708L8.707 8l2.647 2.646a.5.5 0 01-.708.708L8 8.707l-2.646 2.647a.5.5 0 01-.708-.708L7.293 8 4.646 5.354a.5.5 0 010-.708z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Toast -->
+        <div id="error-toast" class="error-toast hidden">
+            <div class="toast-content">
+                <div class="toast-icon">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 5a1 1 0 112 0v3a1 1 0 11-2 0V5zm1 7a1 1 0 100-2 1 1 0 000 2z"/>
+                    </svg>
+                </div>
+                <div id="error-message" class="toast-text">Something went wrong. Please try again.</div>
+                <button id="close-error" class="toast-close">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                        <path d="M7 5.586L11.293 1.293a1 1 0 111.414 1.414L8.414 7l4.293 4.293a1 1 0 01-1.414 1.414L7 8.414l-4.293 4.293a1 1 0 01-1.414-1.414L5.586 7 1.293 2.707a1 1 0 011.414-1.414L7 5.586z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="copilot-script-fixed.js"></script>
+</body>
+</html>
